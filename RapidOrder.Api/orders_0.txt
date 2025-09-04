@@ -1,0 +1,23 @@
+Enabled demodulators: POCSAG1200
+POCSAG1200: Address: 1234560  Function: 0  Numeric: . ][3
+POCSAG1200: Address: 1234560  Function: 0  Alpha:   Jue
+POCSAG1200: Address: 1234560  Function: 0  Skyper:  Ioe
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address: 1234560  Function: 0  Numeric: . ][3
+POCSAG1200: Address: 1234560  Function: 0  Alpha:   Jue
+POCSAG1200: Address: 1234560  Function: 0  Skyper:  Ioe
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address: 1387338  Function: 0 
+POCSAG1200: Address: 1462106  Function: 1 
+POCSAG1200: Address: 1234560  Function: 0  Numeric: . ][2
+POCSAG1200: Address: 1234560  Function: 0  Alpha:   Jue
+POCSAG1200: Address: 1234560  Function: 0  Skyper:  Ioe
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address: 1234560  Function: 0  Numeric: . ][2
+POCSAG1200: Address: 1234560  Function: 0  Alpha:   Jue
+POCSAG1200: Address: 1234560  Function: 0  Skyper:  Ioe
+POCSAG1200: Address:       1  Function: 0 
+POCSAG1200: Address:       1  Function: 0 
