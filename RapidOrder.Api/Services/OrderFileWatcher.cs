@@ -65,17 +65,15 @@ namespace RapidOrder.Api.Services
                 string raw = line[(idx + "Numeric:".Length)..].Trim();
                 if (string.IsNullOrEmpty(raw)) continue;
 
-                var (decoded, button) = DecodeRaw(raw); // decoded is HEX string
+                var (decoded, button) = DecodeRaw(raw);
 
                 var key = $"{decoded}-{button}";
                 var now = DateTime.UtcNow;
                 if (lastSeen.TryGetValue(key, out var last) && (now - last).TotalSeconds < 2) continue;
                 lastSeen[key] = now;
 
-                // 🔸 call the app service in a DI scope
-                using var scope = _scopeFactory.CreateScope();
-                var svc = scope.ServiceProvider.GetRequiredService<MissionAppService>();
-                await svc.CreateMissionFromSignalAsync(decoded, button, DateTime.UtcNow, ct);
+                // ✅ use async helper
+                await SaveMissionAsync(decoded, button, now, ct);
             }
 
             lastPosition = fs.Position;
@@ -103,6 +101,29 @@ namespace RapidOrder.Api.Services
             // Keep as string (e.g., "4D3E")
             return (new string(outChars).Trim(), button);
         }
-    }
 
+
+        private async Task SaveMissionAsync(string decoded, int button, DateTime ts, CancellationToken ct)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var missionAppService = scope.ServiceProvider.GetRequiredService<MissionAppService>();
+
+            var mission = new Mission
+            {
+                SourceDecoded = decoded,   // ex: "4D3E"
+                SourceButton = button,     // ex: 1 (Order), 2 (Payment)
+                StartedAt = ts,
+                Status = MissionStatus.STARTED
+            };
+
+            await missionAppService.CreateMissionFromSignalAsync(
+                mission.SourceDecoded,
+                (int)mission.SourceButton,
+                mission.StartedAt,
+                ct
+            );
+        }
+
+    }
 }
+

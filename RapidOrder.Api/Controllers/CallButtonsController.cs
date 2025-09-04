@@ -15,7 +15,7 @@ namespace RapidOrder.Api.Controllers
 
         [HttpGet]
         public Task<List<CallButton>> GetAll() =>
-            _db.CallButtons.Include(c => c.Place).Include(c => c.ActionMaps).ToListAsync();
+            _db.CallButtons.Include(c => c.Place).ToListAsync();
 
         public record MapReq(int ButtonNumber, MissionType MissionType);
 
@@ -30,17 +30,15 @@ namespace RapidOrder.Api.Controllers
         [HttpPost("{id:int}/map")]
         public async Task<IActionResult> MapButton(int id, [FromBody] MapReq req)
         {
-            var cb = await _db.CallButtons.Include(c => c.ActionMaps).FirstOrDefaultAsync(c => c.Id == id);
+            var cb = await _db.CallButtons.FirstOrDefaultAsync(c => c.Id == id);
             if (cb == null) return NotFound();
 
-            var existing = cb.ActionMaps.FirstOrDefault(m => m.ButtonNumber == req.ButtonNumber);
-            if (existing == null)
-                cb.ActionMaps.Add(new CallButtonActionMap { ButtonNumber = req.ButtonNumber, MissionType = req.MissionType });
-            else
-                existing.MissionType = req.MissionType;
+            // Instead of persisting to ActionMaps table,
+            // you must decide how to store mapping (e.g. config file, enum switch, etc.)
+            // Example: just return fake mapping
+            var map = new { cb.Id, req.ButtonNumber, req.MissionType };
 
-            await _db.SaveChangesAsync();
-            return Ok(cb);
+            return Ok(map);
         }
     }
 }

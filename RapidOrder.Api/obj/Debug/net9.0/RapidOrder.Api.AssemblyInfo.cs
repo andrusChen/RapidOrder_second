@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RapidOrder.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a27776d43aabc7b34326df3b2d6bb21cd602dd79")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0c1ef39ed357d665bcf3d2eeaa774c013ff4551")]
 [assembly: System.Reflection.AssemblyProductAttribute("RapidOrder.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RapidOrder.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

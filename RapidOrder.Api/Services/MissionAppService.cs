@@ -22,7 +22,6 @@ namespace RapidOrder.Api.Services
             // 1) Find CallButton by HEX device code
             var callButton = await _db.CallButtons
                 .Include(cb => cb.Place)
-                .Include(cb => cb.ActionMaps)
                 .FirstOrDefaultAsync(cb => cb.DeviceCode == decoded, ct);
 
             if (callButton == null)
@@ -39,8 +38,7 @@ namespace RapidOrder.Api.Services
             }
 
             // 2) Resolve MissionType from per-button mapping (default: ORDER)
-            var mapped = callButton.ActionMaps.FirstOrDefault(m => m.ButtonNumber == button);
-            var missionType = mapped?.MissionType ?? MissionType.ORDER;
+            var missionType = MissionType.ORDER;
 
             // 3) Create Mission for the mapped Place
             var mission = new Mission

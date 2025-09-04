@@ -11,7 +11,6 @@ namespace RapidOrder.Infrastructure
         public DbSet<PlaceGroup> PlaceGroups => Set<PlaceGroup>();
         public DbSet<Place> Places => Set<Place>();
         public DbSet<CallButton> CallButtons => Set<CallButton>();
-        public DbSet<CallButtonActionMap> CallButtonActionMaps => Set<CallButtonActionMap>();
         public DbSet<Mission> Missions => Set<Mission>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Watch> Watches => Set<Watch>();
@@ -23,9 +22,7 @@ namespace RapidOrder.Infrastructure
 
             modelBuilder.Entity<Place>().HasIndex(p => p.Number).IsUnique(false);
             modelBuilder.Entity<CallButton>().HasIndex(cb => cb.DeviceCode).IsUnique();
-            modelBuilder.Entity<CallButtonActionMap>()
-                .HasIndex(m => new { m.CallButtonId, m.ButtonNumber })
-                .IsUnique();
+     
             modelBuilder.Entity<Mission>().HasIndex(m => new { m.PlaceId, m.StartedAt });
 
             base.OnModelCreating(modelBuilder);

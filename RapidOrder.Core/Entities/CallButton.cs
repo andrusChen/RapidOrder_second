@@ -11,6 +11,6 @@ namespace RapidOrder.Core.Entities
         public MissionType ButtonId { get; set; }
         public int PlaceId { get; set; }
         public Place Place { get; set; } = default!;
-        public ICollection<CallButtonActionMap> ActionMaps { get; set; } = new List<CallButtonActionMap>();
+        // public ICollection<CallButtonActionMap> ActionMaps { get; set; } = new List<CallButtonActionMap>();
     }
 }

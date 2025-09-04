@@ -8,7 +8,7 @@ namespace RapidOrder.Core.DTOs
         public MissionType Type { get; set; }
         public MissionStatus Status { get; set; }
         public DateTime StartedAt { get; set; }
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
         public string PlaceLabel { get; set; } = "";
     }
 }

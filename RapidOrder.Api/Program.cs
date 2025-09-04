@@ -4,6 +4,7 @@ using RapidOrder.Api.Hubs;
 using RapidOrder.Api.Services;
 using Microsoft.OpenApi.Models;
 using RapidOrder.Core.Entities;
+using RapidOrder.Core.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,14 +60,19 @@ var db = scope.ServiceProvider.GetRequiredService<RapidOrderDbContext>();
 
 if (!db.Places.Any())
 {
+    var defaultPlaceGroup = new PlaceGroup { Name = "Main Room" };
     db.Places.AddRange(new[]
     {
-        new Place { Number = 1, Description = "Table 1" },
-        new Place { Number = 2, Description = "Table 2" },
-        new Place { Number = 3, Description = "Table 3" }
+        new Place { Number = 1, Description = "Table 1", PlaceGroup = defaultPlaceGroup },
+        new Place { Number = 2, Description = "Table 2", PlaceGroup = defaultPlaceGroup },
+        new Place { Number = 3, Description = "Table 3", PlaceGroup = defaultPlaceGroup }
     });
     db.SaveChanges();
 }
+
+
+
+
 
 app.UseCors("AllowFrontend");
 

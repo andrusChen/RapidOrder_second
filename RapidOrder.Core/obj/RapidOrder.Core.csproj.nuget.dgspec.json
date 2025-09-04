@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\andrus\\WORK\\RapidORder_new\\RapidOrder.Core\\RapidOrder.Core.csproj": {}
+    "C:\\Users\\andrus\\WORK\\RapidOrder_second\\RapidOrder.Core\\RapidOrder.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\andrus\\WORK\\RapidORder_new\\RapidOrder.Core\\RapidOrder.Core.csproj": {
+    "C:\\Users\\andrus\\WORK\\RapidOrder_second\\RapidOrder.Core\\RapidOrder.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\andrus\\WORK\\RapidORder_new\\RapidOrder.Core\\RapidOrder.Core.csproj",
+        "projectUniqueName": "C:\\Users\\andrus\\WORK\\RapidOrder_second\\RapidOrder.Core\\RapidOrder.Core.csproj",
         "projectName": "RapidOrder.Core",
-        "projectPath": "C:\\Users\\andrus\\WORK\\RapidORder_new\\RapidOrder.Core\\RapidOrder.Core.csproj",
+        "projectPath": "C:\\Users\\andrus\\WORK\\RapidOrder_second\\RapidOrder.Core\\RapidOrder.Core.csproj",
         "packagesPath": "C:\\Users\\andrus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\andrus\\WORK\\RapidORder_new\\RapidOrder.Core\\obj\\",
+        "outputPath": "C:\\Users\\andrus\\WORK\\RapidOrder_second\\RapidOrder.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\andrus\\AppData\\Roaming\\NuGet\\NuGet.Config"
