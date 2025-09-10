@@ -29,7 +29,7 @@ builder.Services.AddDbContext<RapidOrderDbContext>(opt =>
 builder.Services.AddScoped<MissionAppService>();   // <- needed
 builder.Services.AddSingleton<MissionNotifier>();  // <- SignalR wrapper
 
-builder.Services.AddHostedService<OrderFileWatcher>();
+builder.Services.AddHostedService<SignalProcessorService>();
 
 builder.Services.AddCors(options =>
 {
@@ -37,7 +37,8 @@ builder.Services.AddCors(options =>
         policy => policy
             .WithOrigins("http://localhost:3000") // your frontend URL
             .AllowAnyMethod()
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 
 var app = builder.Build();
