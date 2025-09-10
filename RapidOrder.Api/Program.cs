@@ -29,7 +29,7 @@ builder.Services.AddDbContext<RapidOrderDbContext>(opt =>
 builder.Services.AddScoped<MissionAppService>();   // <- needed
 builder.Services.AddSingleton<MissionNotifier>();  // <- SignalR wrapper
 
-builder.Services.AddHostedService<OrderFileWatcher>();
+builder.Services.AddHostedService<SignalProcessorService>();
 
 builder.Services.AddCors(options =>
 {
