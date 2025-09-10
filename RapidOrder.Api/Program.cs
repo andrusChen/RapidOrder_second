@@ -58,17 +58,7 @@ if (app.Environment.IsDevelopment())
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<RapidOrderDbContext>();
 
-if (!db.Places.Any())
-{
-    var defaultPlaceGroup = new PlaceGroup { Name = "Main Room" };
-    db.Places.AddRange(new[]
-    {
-        new Place { Number = 1, Description = "Table 1", PlaceGroup = defaultPlaceGroup },
-        new Place { Number = 2, Description = "Table 2", PlaceGroup = defaultPlaceGroup },
-        new Place { Number = 3, Description = "Table 3", PlaceGroup = defaultPlaceGroup }
-    });
-    db.SaveChanges();
-}
+
 
 
 

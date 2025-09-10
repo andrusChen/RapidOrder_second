@@ -8,7 +8,7 @@ namespace RapidOrder.Core.Entities
         public string DeviceCode { get; set; } = "";  // RF/Pocsag code you decode
         public string Label { get; set; } = "";
 
-        public MissionType ButtonId { get; set; }
+        public string ButtonId { get; set; }
         public int PlaceId { get; set; }
         public Place Place { get; set; } = default!;
         // public ICollection<CallButtonActionMap> ActionMaps { get; set; } = new List<CallButtonActionMap>();

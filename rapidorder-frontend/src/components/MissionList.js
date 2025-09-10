@@ -35,7 +35,7 @@ export default function MissionList() {
         {missions.map((m) => (
           <li key={m.id}>
             <strong>{m.decoded}</strong> (Button {m.button}) —{" "}
-            {new Date(m.timestamp).toLocaleString()}
+            {new Date(m.startedAt).toLocaleString()}
           </li>
         ))}
       </ul>

@@ -27,18 +27,6 @@ namespace RapidOrder.Api.Controllers
             return Ok(cb);
         }
 
-        [HttpPost("{id:int}/map")]
-        public async Task<IActionResult> MapButton(int id, [FromBody] MapReq req)
-        {
-            var cb = await _db.CallButtons.FirstOrDefaultAsync(c => c.Id == id);
-            if (cb == null) return NotFound();
-
-            // Instead of persisting to ActionMaps table,
-            // you must decide how to store mapping (e.g. config file, enum switch, etc.)
-            // Example: just return fake mapping
-            var map = new { cb.Id, req.ButtonNumber, req.MissionType };
-
-            return Ok(map);
-        }
+        
     }
 }

@@ -37,8 +37,15 @@ namespace RapidOrder.Api.Services
                 return 0;
             }
 
-            // 2) Resolve MissionType from per-button mapping (default: ORDER)
-            var missionType = MissionType.ORDER;
+            // 2) Resolve MissionType from per-button mapping
+            var missionType = button switch
+            {
+                1 => MissionType.ORDER,
+                2 => MissionType.PAYMENT,
+                3 => MissionType.PAYMENT_EC,
+                4 => MissionType.SERVICE,
+                _ => MissionType.ASSISTANCE // fallback/default
+            };
 
             // 3) Create Mission for the mapped Place
             var mission = new Mission

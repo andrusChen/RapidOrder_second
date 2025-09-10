@@ -21,7 +21,6 @@ namespace RapidOrder.Api.Controllers
         public async Task<ActionResult<IEnumerable<Mission>>> GetMissions()
         {
             return await _db.Missions
-                .Include(m => m.Place)
                 .OrderByDescending(m => m.StartedAt)
                 .ToListAsync();
         }

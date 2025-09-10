@@ -101,7 +101,7 @@ namespace RapidOrder.Api.Services
             // Keep as string (e.g., "4D3E")
             return (new string(outChars).Trim(), button);
         }
-
+ 
 
         private async Task SaveMissionAsync(string decoded, int button, DateTime ts, CancellationToken ct)
         {

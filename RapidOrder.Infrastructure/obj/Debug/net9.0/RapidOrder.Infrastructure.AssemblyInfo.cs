@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RapidOrder.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0c1ef39ed357d665bcf3d2eeaa774c013ff4551")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85073fdeec4bc5733ad4c1734c67a01bc78d64ed")]
 [assembly: System.Reflection.AssemblyProductAttribute("RapidOrder.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RapidOrder.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
