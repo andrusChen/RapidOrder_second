@@ -10,10 +10,13 @@ namespace RapidOrder.Api.Services
     {
         private readonly RapidOrderDbContext _db;
         private readonly MissionNotifier _notifier;
+        private readonly LearningModeService _learningModeService;
 
-        public MissionAppService(RapidOrderDbContext db, MissionNotifier notifier)
+        public MissionAppService(RapidOrderDbContext db, MissionNotifier notifier, LearningModeService learningModeService)
         {
-            _db = db; _notifier = notifier;
+            _db = db;
+            _notifier = notifier;
+            _learningModeService = learningModeService;
         }
 
         // Called by the file watcher when it decodes a signal
@@ -26,6 +29,28 @@ namespace RapidOrder.Api.Services
 
             if (callButton == null)
             {
+                if (_learningModeService.IsLearningModeEnabled)
+                {
+                    var newCallButton = new CallButton
+                    {
+                        DeviceCode = decoded,
+                        ButtonId = decoded, // Or some other default
+                        Label = $"New Button {decoded}",
+                        PlaceId = null
+                    };
+                    _db.CallButtons.Add(newCallButton);
+                    await _db.SaveChangesAsync(ct);
+                    // Optionally, log that a new button was learned
+                    _db.EventLogs.Add(new EventLog
+                    {
+                        Type = EventType.System,
+                        CreatedAt = ts,
+                        PayloadJson = $"{{\"learnedCallButton\":\"{decoded}\",\"button\":{button}}}"
+                    });
+                    await _db.SaveChangesAsync(ct);
+                    return 0; // Don't create a mission for the learning signal
+                }
+
                 // Unknown device: log and bail (no Mission)
                 _db.EventLogs.Add(new EventLog
                 {
