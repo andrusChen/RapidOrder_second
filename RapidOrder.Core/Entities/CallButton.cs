@@ -9,8 +9,8 @@ namespace RapidOrder.Core.Entities
         public string Label { get; set; } = "";
 
         public string ButtonId { get; set; }
-        public int PlaceId { get; set; }
-        public Place Place { get; set; } = default!;
+        public int? PlaceId { get; set; }
+        public Place? Place { get; set; } = default!;
         // public ICollection<CallButtonActionMap> ActionMaps { get; set; } = new List<CallButtonActionMap>();
     }
 }
