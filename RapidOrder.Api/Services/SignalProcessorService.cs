@@ -98,7 +98,7 @@ namespace RapidOrder.Api.Services
 
                     var key = $"{decoded}-{button}";
                     var now = DateTime.UtcNow;
-                    if (_lastSeen.TryGetValue(key, out var last) && (now - last).TotalSeconds < 2) continue;
+                    if (_lastSeen.TryGetValue(key, out var last) && (now - last).TotalSeconds < 13) continue;
                     _lastSeen[key] = now;
 
                     await SaveMissionAsync(decoded, button, now, stoppingToken);

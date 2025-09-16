@@ -26,28 +26,8 @@ namespace RapidOrder.Infrastructure
             modelBuilder.Entity<ActionMap>().HasIndex(am => new { am.DeviceCode, am.ButtonNumber }).IsUnique();
 
             modelBuilder.Entity<Mission>().HasIndex(m => new { m.PlaceId, m.StartedAt });
-            modelBuilder.Entity<Place>().HasData(
-                new Place { Id = 1, Number = 101, Description = "Table 1", PlaceGroupId = null },
-                new Place { Id = 2, Number = 102, Description = "Table 2", PlaceGroupId = null }
-            );
-            modelBuilder.Entity<CallButton>().HasData(
-                new CallButton
-                {
-                    Id = 1,
-                    DeviceCode = "ACEF",   // HEX code from RF
-                    Label = "Table 1 Button",
-                    ButtonId = "ACEF",
-                    PlaceId = 1            // Must match an existing Place!
-                },
-                new CallButton
-                {
-                    Id = 2,
-                    DeviceCode = "4D3F",
-                    Label = "Table 2 Button",
-                    ButtonId = "4D3E",
-                    PlaceId = 2
-                }
-            );
+          
+            
 
             base.OnModelCreating(modelBuilder);
         }

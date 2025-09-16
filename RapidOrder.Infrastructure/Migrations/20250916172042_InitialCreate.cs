@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RapidOrder.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedCallButtons : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -105,7 +105,7 @@ namespace RapidOrder.Infrastructure.Migrations
                     DeviceCode = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                     Label = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                     ButtonId = table.Column<string>(type: "TEXT", nullable: false),
-                    PlaceId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PlaceId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,8 +114,7 @@ namespace RapidOrder.Infrastructure.Migrations
                         name: "FK_CallButtons_Places_PlaceId",
                         column: x => x.PlaceId,
                         principalTable: "Places",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

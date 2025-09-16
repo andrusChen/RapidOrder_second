@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RapidOrder.Infrastructure;
 using RapidOrder.Core.Entities;
+using Microsoft.Data.Sqlite;
 
 namespace RapidOrder.Api.Controllers
 {
@@ -20,9 +21,16 @@ namespace RapidOrder.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mission>>> GetMissions()
         {
-            return await _db.Missions
-                .OrderByDescending(m => m.StartedAt)
-                .ToListAsync();
+            try
+            {
+                return await _db.Missions
+                    .OrderByDescending(m => m.StartedAt)
+                    .ToListAsync();
+            }
+            catch (SqliteException ex) when (ex.SqliteErrorCode == 1) // "no such table"
+            {
+                return Ok(new List<Mission>()); // return empty list safely
+            }
         }
 
         // GET: api/missions/5

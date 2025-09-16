@@ -26,7 +26,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddDbContext<RapidOrderDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=rapidorder.db"));
 
-builder.Services.AddScoped<MissionAppService>();   // <- needed
+builder.Services.AddScoped<MissionAppService>(); 
+builder.Services.AddSingleton<LearningModeService>();  // <- needed
 builder.Services.AddSingleton<MissionNotifier>();  // <- SignalR wrapper
 
 builder.Services.AddHostedService<SignalProcessorService>();

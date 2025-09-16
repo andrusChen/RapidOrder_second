@@ -11,8 +11,8 @@ using RapidOrder.Infrastructure;
 namespace RapidOrder.Infrastructure.Migrations
 {
     [DbContext(typeof(RapidOrderDbContext))]
-    [Migration("20250904152721_SeedCallButtons")]
-    partial class SeedCallButtons
+    [Migration("20250916172505_InitialCreateRemoveSeed")]
+    partial class InitialCreateRemoveSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace RapidOrder.Infrastructure.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PlaceId")
+                    b.Property<int?>("PlaceId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -75,24 +75,6 @@ namespace RapidOrder.Infrastructure.Migrations
                     b.HasIndex("PlaceId");
 
                     b.ToTable("CallButtons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ButtonId = "ACEF",
-                            DeviceCode = "ACEF",
-                            Label = "Table 1 Button",
-                            PlaceId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ButtonId = "4D3E",
-                            DeviceCode = "4D3F",
-                            Label = "Table 2 Button",
-                            PlaceId = 2
-                        });
                 });
 
             modelBuilder.Entity("RapidOrder.Core.Entities.EventLog", b =>
@@ -203,20 +185,6 @@ namespace RapidOrder.Infrastructure.Migrations
                     b.HasIndex("PlaceGroupId");
 
                     b.ToTable("Places");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Table 1",
-                            Number = 101
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Table 2",
-                            Number = 102
-                        });
                 });
 
             modelBuilder.Entity("RapidOrder.Core.Entities.PlaceGroup", b =>
@@ -282,9 +250,7 @@ namespace RapidOrder.Infrastructure.Migrations
                 {
                     b.HasOne("RapidOrder.Core.Entities.Place", "Place")
                         .WithMany("CallButtons")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlaceId");
 
                     b.Navigation("Place");
                 });
