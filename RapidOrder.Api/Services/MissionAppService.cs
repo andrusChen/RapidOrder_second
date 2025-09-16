@@ -97,6 +97,10 @@ namespace RapidOrder.Api.Services
             await _db.SaveChangesAsync(ct);
 
             // 5) Notify SignalR
+            var placeLabel = callButton.Place != null
+                ? $"{callButton.Place.Description} (#{callButton.Place.Number})"
+                : "Unassigned";
+
             var dto = new MissionCreatedDto
             {
                 Id = mission.Id,
@@ -104,7 +108,7 @@ namespace RapidOrder.Api.Services
                 Status = mission.Status,
                 StartedAt = mission.StartedAt,
                 PlaceId = callButton.PlaceId,
-                PlaceLabel = $"{callButton.Place.Description} (#{callButton.Place.Number})"
+                PlaceLabel = placeLabel
             };
             await _notifier.PushCreatedAsync(dto);
 
@@ -136,6 +140,10 @@ namespace RapidOrder.Api.Services
             await _db.SaveChangesAsync(ct);
 
             // push update
+            var placeLabelForUpdate = m.Place != null
+                ? $"{m.Place.Description} (#{m.Place.Number})"
+                : "Unassigned";
+
             var dto = new MissionCreatedDto
             {
                 Id = m.Id,
@@ -143,7 +151,7 @@ namespace RapidOrder.Api.Services
                 Status = m.Status,
                 StartedAt = m.StartedAt,
                 PlaceId = m.PlaceId,
-                PlaceLabel = $"{m.Place.Description} (#{m.Place.Number})"
+                PlaceLabel = placeLabelForUpdate
             };
             await _notifier.PushUpdatedAsync(dto);
 
