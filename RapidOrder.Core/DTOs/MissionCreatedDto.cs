@@ -10,5 +10,7 @@ namespace RapidOrder.Core.DTOs
         public DateTime StartedAt { get; set; }
         public int? PlaceId { get; set; }
         public string PlaceLabel { get; set; } = "";
+        public string? SourceDecoded { get; set; }
+        public int? SourceButton { get; set; }
     }
 }

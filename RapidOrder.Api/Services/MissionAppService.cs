@@ -108,7 +108,9 @@ namespace RapidOrder.Api.Services
                 Status = mission.Status,
                 StartedAt = mission.StartedAt,
                 PlaceId = callButton.PlaceId,
-                PlaceLabel = placeLabel
+                PlaceLabel = placeLabel,
+                SourceDecoded = mission.SourceDecoded,
+                SourceButton = mission.SourceButton
             };
             await _notifier.PushCreatedAsync(dto);
 
@@ -151,7 +153,9 @@ namespace RapidOrder.Api.Services
                 Status = m.Status,
                 StartedAt = m.StartedAt,
                 PlaceId = m.PlaceId,
-                PlaceLabel = placeLabelForUpdate
+                PlaceLabel = placeLabelForUpdate,
+                SourceDecoded = m.SourceDecoded,
+                SourceButton = m.SourceButton
             };
             await _notifier.PushUpdatedAsync(dto);
 

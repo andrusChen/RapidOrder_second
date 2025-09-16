@@ -52,7 +52,7 @@ export default function MissionList() {
       <ul>
         {missions.map((m) => (
           <li key={m.id}>
-            <strong>{m.decoded}</strong> (Button {m.button}) —{" "}
+            <strong>{m.placeLabel}</strong>: {m.sourceDecoded} (Button {m.sourceButton}) —{" "}
             {new Date(m.startedAt).toLocaleString()}
           </li>
         ))}
