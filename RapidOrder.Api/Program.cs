@@ -5,10 +5,14 @@ using RapidOrder.Api.Services;
 using Microsoft.OpenApi.Models;
 using RapidOrder.Core.Entities;
 using RapidOrder.Core.Enums;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddSignalR();
 
 // ✅ Swagger
@@ -58,6 +62,8 @@ if (app.Environment.IsDevelopment())
 
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<RapidOrderDbContext>();
+// Apply any pending EF Core migrations automatically on startup
+db.Database.Migrate();
 
 
 

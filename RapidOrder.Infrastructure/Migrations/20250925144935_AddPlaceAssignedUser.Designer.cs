@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RapidOrder.Infrastructure;
 
@@ -10,9 +11,11 @@ using RapidOrder.Infrastructure;
 namespace RapidOrder.Infrastructure.Migrations
 {
     [DbContext(typeof(RapidOrderDbContext))]
-    partial class RapidOrderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250925144935_AddPlaceAssignedUser")]
+    partial class AddPlaceAssignedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");

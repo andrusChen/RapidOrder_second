@@ -40,12 +40,11 @@ namespace RapidOrder.Api.Services
                     };
                     _db.CallButtons.Add(newCallButton);
                     await _db.SaveChangesAsync(ct);
-                    // Optionally, log that a new button was learned
                     _db.EventLogs.Add(new EventLog
                     {
                         Type = EventType.System,
                         CreatedAt = ts,
-                        PayloadJson = $"{\"learnedCallButton\":\"{decoded}\",\"button\":{button}}"
+                        PayloadJson = $"{{\"learnedCallButton\":\"{decoded}\",\"button\":{button}}}"
                     });
                     await _db.SaveChangesAsync(ct);
                     return 0; // Don't create a mission for the learning signal
@@ -56,7 +55,7 @@ namespace RapidOrder.Api.Services
                 {
                     Type = EventType.MissionCreated, // keeping enum; payload explains it’s unknown
                     CreatedAt = ts,
-                    PayloadJson = $"{\"unknownCallButton\":\"{decoded}\",\"button\":{button}}"
+                    PayloadJson = $"{{\"unknownCallButton\":\"{decoded}\",\"button\":{button}}}"
                 });
                 await _db.SaveChangesAsync(ct);
                 return 0;
@@ -100,7 +99,7 @@ namespace RapidOrder.Api.Services
                 Type = EventType.MissionCreated,
                 CreatedAt = ts,
                 PlaceId = callButton.PlaceId,
-                PayloadJson = $"{\"device\":\"{decoded}\",\"button\":{button}}"
+                PayloadJson = $"{{\"device\":\"{decoded}\",\"button\":{button}}}"
             });
 
             await _db.SaveChangesAsync(ct);
