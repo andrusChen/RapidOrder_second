@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using RapidOrder.Infrastructure;
 using RapidOrder.Core.Entities;
 using Microsoft.Data.Sqlite;
+using RapidOrder.Core.Enums;
+using RapidOrder.Api.Services;
 
 namespace RapidOrder.Api.Controllers
 {
@@ -11,10 +13,12 @@ namespace RapidOrder.Api.Controllers
     public class MissionsController : ControllerBase
     {
         private readonly RapidOrderDbContext _db;
+        private readonly MissionAppService _missionService;
 
-        public MissionsController(RapidOrderDbContext db)
+        public MissionsController(RapidOrderDbContext db, MissionAppService missionService)
         {
             _db = db;
+            _missionService = missionService;
         }
 
         // GET: api/missions
@@ -31,6 +35,39 @@ namespace RapidOrder.Api.Controllers
             {
                 return Ok(new List<Mission>()); // return empty list safely
             }
+        }
+
+        [HttpPost("{id}/acknowledge")]
+        public async Task<IActionResult> Acknowledge(long id)
+        {
+            var updated = await _missionService.UpdateMissionAsync(id, MissionStatus.ACKNOWLEDGED, null);
+            if (updated == null) return NotFound();
+            return Ok(updated);
+        }
+
+        public record AssignReq(long UserId);
+        [HttpPost("{id}/assign")]
+        public async Task<IActionResult> Assign(long id, [FromBody] AssignReq req)
+        {
+            var updated = await _missionService.UpdateMissionAsync(id, MissionStatus.ACKNOWLEDGED, req.UserId);
+            if (updated == null) return NotFound();
+            return Ok(updated);
+        }
+
+        [HttpPost("{id}/finish")]
+        public async Task<IActionResult> Finish(long id)
+        {
+            var updated = await _missionService.UpdateMissionAsync(id, MissionStatus.FINISHED, null);
+            if (updated == null) return NotFound();
+            return Ok(updated);
+        }
+
+        [HttpPost("{id}/cancel")]
+        public async Task<IActionResult> Cancel(long id)
+        {
+            var updated = await _missionService.UpdateMissionAsync(id, MissionStatus.CANCELED, null);
+            if (updated == null) return NotFound();
+            return Ok(updated);
         }
 
         // GET: api/missions/5

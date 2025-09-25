@@ -12,5 +12,7 @@ namespace RapidOrder.Core.DTOs
         public string PlaceLabel { get; set; } = "";
         public string? SourceDecoded { get; set; }
         public int? SourceButton { get; set; }
+        public long? AssignedUserId { get; set; }
+        public string? AssignedUserName { get; set; }
     }
 }

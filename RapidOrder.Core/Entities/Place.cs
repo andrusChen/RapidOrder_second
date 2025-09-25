@@ -7,6 +7,8 @@ namespace RapidOrder.Core.Entities
         public string Description { get; set; } = "";
         public int? PlaceGroupId { get; set; }
         public PlaceGroup? PlaceGroup { get; set; }
+        public long? AssignedUserId { get; set; }
+        public User? AssignedUser { get; set; }
         public ICollection<Mission> Missions { get; set; } = new List<Mission>();
         public ICollection<CallButton> CallButtons { get; set; } = new List<CallButton>();
     }

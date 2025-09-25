@@ -45,7 +45,7 @@ namespace RapidOrder.Api.Services
                     {
                         Type = EventType.System,
                         CreatedAt = ts,
-                        PayloadJson = $"{{\"learnedCallButton\":\"{decoded}\",\"button\":{button}}}"
+                        PayloadJson = $"{\"learnedCallButton\":\"{decoded}\",\"button\":{button}}"
                     });
                     await _db.SaveChangesAsync(ct);
                     return 0; // Don't create a mission for the learning signal
@@ -56,23 +56,26 @@ namespace RapidOrder.Api.Services
                 {
                     Type = EventType.MissionCreated, // keeping enum; payload explains it’s unknown
                     CreatedAt = ts,
-                    PayloadJson = $"{{\"unknownCallButton\":\"{decoded}\",\"button\":{button}}}"
+                    PayloadJson = $"{\"unknownCallButton\":\"{decoded}\",\"button\":{button}}"
                 });
                 await _db.SaveChangesAsync(ct);
                 return 0;
             }
 
-            // 2) Resolve MissionType from per-button mapping
-            var missionType = button switch
-            {
-                1 => MissionType.ORDER,
-                2 => MissionType.PAYMENT,
-                3 => MissionType.PAYMENT_EC,
-                4 => MissionType.SERVICE,
-                _ => MissionType.ASSISTANCE // fallback/default
-            };
+            // 2) Resolve MissionType from ActionMap if defined, else fallback
+            var mapped = await _db.ActionMaps.FirstOrDefaultAsync(a => a.DeviceCode == decoded && a.ButtonNumber == button, ct);
+            var missionType = mapped != null
+                ? mapped.MissionType
+                : button switch
+                {
+                    1 => MissionType.ORDER,
+                    2 => MissionType.PAYMENT,
+                    3 => MissionType.PAYMENT_EC,
+                    4 => MissionType.SERVICE,
+                    _ => MissionType.ASSISTANCE // fallback/default
+                };
 
-            // 3) Create Mission for the mapped Place
+            // 3) Always create a new mission for the mapped Place (status changes are done by staff)
             var mission = new Mission
             {
                 PlaceId = callButton.PlaceId,
@@ -83,20 +86,26 @@ namespace RapidOrder.Api.Services
                 SourceButton = button
             };
 
+            // Auto-assign from place
+            if (callButton.Place?.AssignedUserId != null)
+            {
+                mission.AssignedUserId = callButton.Place.AssignedUserId;
+            }
+
             _db.Missions.Add(mission);
 
-            // 4) EventLog
+            // EventLog for creation
             _db.EventLogs.Add(new EventLog
             {
                 Type = EventType.MissionCreated,
                 CreatedAt = ts,
                 PlaceId = callButton.PlaceId,
-                PayloadJson = $"{{\"device\":\"{decoded}\",\"button\":{button}}}"
+                PayloadJson = $"{\"device\":\"{decoded}\",\"button\":{button}}"
             });
 
             await _db.SaveChangesAsync(ct);
 
-            // 5) Notify SignalR
+            // Notify SignalR
             var placeLabel = callButton.Place != null
                 ? $"{callButton.Place.Description} (#{callButton.Place.Number})"
                 : "Unassigned";
@@ -110,7 +119,9 @@ namespace RapidOrder.Api.Services
                 PlaceId = callButton.PlaceId,
                 PlaceLabel = placeLabel,
                 SourceDecoded = mission.SourceDecoded,
-                SourceButton = mission.SourceButton
+                SourceButton = mission.SourceButton,
+                AssignedUserId = mission.AssignedUserId,
+                AssignedUserName = mission.AssignedUser?.DisplayName
             };
             await _notifier.PushCreatedAsync(dto);
 
@@ -155,7 +166,9 @@ namespace RapidOrder.Api.Services
                 PlaceId = m.PlaceId,
                 PlaceLabel = placeLabelForUpdate,
                 SourceDecoded = m.SourceDecoded,
-                SourceButton = m.SourceButton
+                SourceButton = m.SourceButton,
+                AssignedUserId = m.AssignedUserId,
+                AssignedUserName = m.AssignedUser?.DisplayName
             };
             await _notifier.PushUpdatedAsync(dto);
 
